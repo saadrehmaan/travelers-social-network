@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Dimensions, ScrollView, AsyncStorage, RefreshControl} from 'react-native';
+import { StyleSheet, Dimensions, ActivityIndicator, ScrollView, AsyncStorage, RefreshControl} from 'react-native';
 import { Block, theme } from 'galio-framework';
 
 import { Card, Button } from '../components';
@@ -8,6 +8,7 @@ import { logOut } from '../services/auth.service';
 import * as firebase from 'firebase';
 import { Images } from '../constants';
 import { FlatList } from 'react-native-gesture-handler';
+
 const { width } = Dimensions.get('screen');
 
 
@@ -17,6 +18,12 @@ class Home extends React.Component {
   firestorePostRef = firebase.firestore().collection("posts");
   firestoreFollowingRef = firebase.firestore().collection("following").doc(this.user.uid)
   .collection("userFollowing");
+
+
+  // locQuery = firebase.firestore().collection("posts").doc(this.user.uid)
+  // .collection("userPosts").doc(this.postId).get().then((doc)=>{
+  //  location =  doc.data().location /// Is ko apny hisab sa use kr
+  // })
 
 
   
@@ -102,7 +109,7 @@ getFollowingPosts = async()=>{
             image: doc.data().image,
             cta: "cta", 
             caption: doc.data().caption,
-            location: doc.data().location,
+            location: doc.data().location.locationName,
             postId: doc.data().postId,
             timeStamp: doc.data().time,
             horizontal: true
@@ -181,7 +188,7 @@ getMorePosts = async()=>{
             image: doc.data().image,
             cta: "cta", 
             caption: doc.data().caption,
-            location: doc.data().location,
+            location: doc.data().location.locationName,
             postId: doc.data().postId,
             timeStamp: doc.data().time,
             horizontal: true
@@ -256,6 +263,7 @@ getNextPosts = ()=>{
   renderArticles = () => {
     return (
       <Block>
+        {!this.state.posts.length>0 && <Block style={{paddingTop: 30}}><ActivityIndicator size="large"/></Block>}
         <FlatList
         showsVerticalScrollIndicator={false}
         onScrollEndDrag={this.getNextPosts}

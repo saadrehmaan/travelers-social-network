@@ -31,10 +31,25 @@ import Header from "../components/Header";
 
 import Icon from "../components/Icon";
 import UpdateProfile from "../screens/UpdateProfile";
+import AddPost2 from "../screens/AddPost";
 import AddPost from "../screens/AddPost";
 import SearchUser from "../screens/SearchUser";
 import userProfile from "../screens/userProfile";
 import Maps from "../screens/Maps";
+import Explore from "../screens/Explore";
+import PlaceDetail from "../screens/PlaceDetail";
+import PlanChoice from "../screens/PlanChoice";
+import CreatePlan from "../screens/CreatePlan";
+import EditMembers from "../screens/EditMembers";
+import EditTodos from "../screens/EditTodos";
+import Interests from "../screens/Interests";
+import SpotDetail from "../screens/SpotDetail";
+import ShareTour from "../screens/ShareTour";
+import TourNavigation from "../screens/TourNavigation";
+import MyPlans from "../screens/MyPlans";
+import EditPlan from "../screens/EditPlan";
+
+
 
 const TabBarComponent = props => <BottomTabBar {...props} />;
 
@@ -105,6 +120,8 @@ const ArticlesStack = createStackNavigator({
 });
 
 
+
+
 const MapStack = createStackNavigator({
   Maps: {
     screen: Maps,
@@ -118,6 +135,160 @@ const MapStack = createStackNavigator({
   },
   transitionConfig
 });
+
+const ShareTourStack = createStackNavigator({
+  ShareTour: {
+    screen: ShareTour,
+    navigationOptions: ({ navigation }) => ({
+      header: <Header title="ShareTour" navigation={navigation} />
+    })
+  },
+  TourNavigation: {
+    screen: TourNavigation,
+    navigationOptions: ({ navigation }) => ({
+      header: <Header back title="Touring" navigation={navigation} />
+    })
+  }
+},{
+  cardStyle: {
+    backgroundColor: "#FFFFFF"
+  },
+  transitionConfig
+});
+
+const CreatePlanStack = createStackNavigator({
+  CreatePlan: {
+    screen: CreatePlan,
+    navigationOptions: ({ navigation }) => ({
+      header: <Header title="Plan" navigation={navigation} />
+    })
+  }
+},{
+  cardStyle: {
+    backgroundColor: "#FFFFFF"
+  },
+  transitionConfig
+});
+
+
+const MyPlansStack = createStackNavigator({
+  MyPlans: {
+    screen: MyPlans,
+    navigationOptions: ({ navigation }) => ({
+      header: <Header title="My Plans" navigation={navigation} />
+    })
+  },
+  EditPlan: {
+    screen: EditPlan,
+    navigationOptions: ({ navigation }) => ({
+      header: <Header back title="Edit Plan" navigation={navigation} />
+    })
+  },
+  
+SpotDetail: {
+  screen: SpotDetail,
+  navigationOptions: ({ navigation }) => ({
+    header: <Header back title="SpotDetails" navigation={navigation} />
+  })
+},
+EditMembers: {
+  screen: EditMembers,
+  navigationOptions: ({ navigation }) => ({
+    header: <Header back title="Members" navigation={navigation} />
+  })
+},  
+EditTodos: {
+  screen: EditTodos,
+  navigationOptions: ({ navigation }) => ({
+    header: <Header back title="Todos" navigation={navigation} />
+  })
+}
+
+},{
+  cardStyle: {
+    backgroundColor: "#FFFFFF"
+  },
+  transitionConfig
+});
+
+
+
+
+const ExploreStack = createStackNavigator({
+  Explore: {
+    screen: Explore,
+    navigationOptions: ({ navigation }) => ({
+      header: <Header title="Explore" navigation={navigation} />
+    })
+  }
+,
+PlaceDetail: {
+  screen: PlaceDetail,
+  navigationOptions: ({ navigation }) => ({
+    header: <Header back title="Details" navigation={navigation} />
+  })
+},
+PlanChoice: {
+  screen: PlanChoice,
+  navigationOptions: ({ navigation }) => ({
+    header: <Header back title="Plan" navigation={navigation} />
+  })
+},
+CreatePlan: {
+  screen: CreatePlan,
+  navigationOptions: ({ navigation }) => ({
+    header: <Header back title="CreatePlan" navigation={navigation} />
+  })
+},
+SpotDetail: {
+  screen: SpotDetail,
+  navigationOptions: ({ navigation }) => ({
+    header: <Header back title="SpotDetails" navigation={navigation} />
+  })
+},
+EditMembers: {
+  screen: EditMembers,
+  navigationOptions: ({ navigation }) => ({
+    header: <Header back title="Members" navigation={navigation} />
+  })
+},  
+EditTodos: {
+  screen: EditTodos,
+  navigationOptions: ({ navigation }) => ({
+    header: <Header back title="Todos" navigation={navigation} />
+  })
+},
+
+userProfile: {
+  screen: userProfile,
+  navigationOptions: ({ navigation }) => ({
+    header: (
+      <Header title="Profile" back  iconColor={'#FFF'} navigation={navigation} />
+    ),
+     headerTransparent: true
+  })
+}
+},
+{
+  cardStyle: {
+    backgroundColor: "#FFFFFF"
+  },
+  transitionConfig
+});
+
+// const PlaceDetailStack = createStackNavigator({
+//   PlaceDetail: {
+//     screen: PlaceDetail,
+//     navigationOptions: ({ navigation }) => ({
+//       header: <Header title="Details" navigation={navigation} />
+//     })
+//   }
+// },{
+//   cardStyle: {
+//     backgroundColor: "#FFFFFF"
+//   },
+//   transitionConfig
+// });
 
 const ProfileStack = createStackNavigator(
   {
@@ -149,8 +320,15 @@ const ProfileStack = createStackNavigator(
         ),
         headerTransparent: false
       })
-    }
+    
   },
+  Interests: {
+    screen: Interests,
+    navigationOptions: ({ navigation }) => ({
+      header: <Header title="Interests" navigation={navigation} />
+    })
+  }
+},
   {
     cardStyle: { backgroundColor: "#FFFFFF" },
     transitionConfig
@@ -295,6 +473,21 @@ export const SignedIn = createBottomTabNavigator({
       )
     }
   },
+  MyPlans: { 
+    screen: MyPlansStack,
+    navigationOptions:{
+      // tabBarLabel: 'Home',
+      tabBarIcon:({tintColor}) => (
+        <Icon
+      
+      family="AntDesign"
+      size={20}
+      color={tintColor}
+      name="home"
+        />
+      )
+    }
+  },
   Maps: { 
     screen: MapStack,
     navigationOptions:{
@@ -310,6 +503,37 @@ export const SignedIn = createBottomTabNavigator({
       )
     }
   },
+  CreatePlan: { 
+    screen: CreatePlanStack,
+    navigationOptions:{
+      // tabBarLabel: 'Home',
+      tabBarIcon:({tintColor}) => (
+        <Icon
+      
+      family="Feather"
+      size={20}
+      color={tintColor}
+      name="map"
+        />
+      )
+    }
+  },
+  Explore: { 
+    screen: ExploreStack,
+    navigationOptions:{
+      // tabBarLabel: 'Home',
+      tabBarIcon:({tintColor}) => (
+        <Icon
+      
+      family="Feather"
+      size={20}
+      color={tintColor}
+      name="map"
+        />
+      )
+    }
+  },
+  
   Profile:{ 
     screen: ProfileStack,
     navigationOptions:{
@@ -321,6 +545,22 @@ export const SignedIn = createBottomTabNavigator({
       size={20}
       color={tintColor}
       name="user"
+        />
+      )
+    }
+  },
+
+  ShareTour:{ 
+    screen: ShareTourStack,
+    navigationOptions:{
+      // tabBarLabel: 'Profile',
+      tabBarIcon:({tintColor}) => (
+        <Icon
+      
+      family="AntDesign"
+      size={20}
+      color={tintColor}
+      name="addusergroup"
         />
       )
     }
@@ -433,7 +673,7 @@ export const SignedIn = createBottomTabNavigator({
   //   }
   // }
 },{
-  order:['Home', 'SearchUser', 'AddPost', 'Maps' ,'Profile'],
+  order:['Home', 'SearchUser', 'MyPlans', 'AddPost', 'Explore', 'ShareTour' ,'Profile'],
   animationEnabled: true,
   initialRouteName: 'Home',
   navigationOptions:{

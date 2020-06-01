@@ -171,7 +171,7 @@ getPosts = ()=> {
           shadowless = {false}
           icon="edit"
           iconFamily="AntDesign"
-          style={{marginTop: 20, backgroundColor: '#87888a' }}
+          style={{marginTop: 20, backgroundColor: 'tomato' }}
           onPress={this.handleFollow}
         >
           Following
@@ -335,7 +335,7 @@ getPosts = ()=> {
                             image: post.image,
                             cta: 'View article', 
                             caption: post.caption,
-                            location: post.location,
+                            location: post.location.locationName,
                             postId: post.postId,
                             userId: this.state.currentUser
                           })}

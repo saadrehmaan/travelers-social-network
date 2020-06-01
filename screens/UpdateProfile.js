@@ -213,6 +213,13 @@ class UpdateProfile extends React.Component {
                         </Text>
                       </Button>
                     </Block>
+                    <Block middle>
+                      <Button color="muted" style={styles.createButton} onPress={()=>{this.props.navigation.navigate("Interests")}}>
+                        <Text bold size={14} color={argonTheme.COLORS.WHITE}>
+                          UPDATE INTERESTS
+                        </Text>
+                      </Button>
+                    </Block>
                   </KeyboardAvoidingView>
                 </Block>
                 </ScrollView>

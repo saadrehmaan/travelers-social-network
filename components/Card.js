@@ -218,18 +218,23 @@ firestoreUsersRef = firebase.firestore().collection("users");
       this.setState({currentUsername: document.data().username})
   });
   }
+
   postComment = ()=>{
     const {item} = this.props;
     let myComment = this.state.commentInput;
     
     if(myComment!=""){
-      firebase.firestore().collection("comments").doc(item.postId).collection("userComments").add({
+      // firebase.firestore().collection("comments").doc(item.postId).collection("userComments").add({
         
-      }).then((comment)=>{
-        firebase.firestore().collection("comments").doc(item.postId).collection("userComments").doc(comment.id).set({
-          commentId: comment.id,
+      // }).then((comment)=>{
+      //   firebase.firestore().collection("comments").doc(item.postId).collection("userComments").doc(comment.id).set({
+      let randId  = firebase.firestore().collection("comments").doc(item.postId).collection("userComments").doc().id;
+      firebase.firestore().collection("comments").doc(item.postId).collection("userComments").doc(randId).set({
+          commentId: randId,
           username: this.state.currentUsername,
-          comment: myComment
+          comment: myComment,
+          userId: this.user.uid,
+          postUserId: this.state.userId
         }).then(()=>{
 
           this.setState({openCommentInput: false, commentInput:""});
@@ -237,9 +242,6 @@ firestoreUsersRef = firebase.firestore().collection("users");
           this.getCommentData();
         })
 
-      }).catch((err)=>{
-        alert(err);
-      })
     }
   }
 

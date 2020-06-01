@@ -199,7 +199,7 @@ uploadPost = async (uri, fileName)=>{
 
                     <Block row>
                         <Block width={width * 0.8} style={{ marginBottom: 15 }}>
-                        <GoogleAutoComplete apiKey={key} debounce={500} radius="500" queryTypes={"geocode"}>
+                        <GoogleAutoComplete apiKey={key} debounce={500} radius="500" queryTypes={"establishment"}>
                         {({ inputValue, handleTextChange, locationResults, fetchDetails , isSearching}) => (
                           <React.Fragment>
                                         {console.log(locationResults)
@@ -229,6 +229,7 @@ uploadPost = async (uri, fileName)=>{
                                     <Text>{el.structured_formatting.main_text}</Text>
                                     {/* <Text>{el.}</Text> */}
                                 </TouchableOpacity>
+                                
                                 // <LocationItem
                                 //   {...el}
                                 //   fetchDetails={fetchDetails}

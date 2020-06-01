@@ -31,7 +31,7 @@ const androidLogo = require("../assets/imgs/android.png");
 
 const ProfilePicture = 'https://firebasestorage.googleapis.com/v0/b/travycomsats.appspot.com/o/profilePics%2FprofilePic2.PNG?alt=media&token=72bc785f-8b04-40d4-9270-141ff2254892';
 const galleryIcon ="https://cdn0.iconfinder.com/data/icons/communication-bold-part-2/100/bold-67-512.png";
-
+const placesBaseImage = "https://www.yourdictionary.com/images/definitions/lg/9868.navigate.jpg"
 const Viewed = [
   'https://images.unsplash.com/photo-1501601983405-7c7cabaa1581?fit=crop&w=240&q=80',
   'https://images.unsplash.com/photo-1543747579-795b9c2c3ada?fit=crop&w=240&q=80',
@@ -58,5 +58,6 @@ export default {
   Pro,
   ArgonLogo,
   iOSLogo,
-  androidLogo
+  androidLogo,
+  placesBaseImage
 };

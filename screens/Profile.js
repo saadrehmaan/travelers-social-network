@@ -79,7 +79,7 @@ class Profile extends React.Component {
           quality: 0.1
         });
         
-        console.log(result);
+        // console.log(result);
 
         if (!result.cancelled) {
           
@@ -144,17 +144,20 @@ class Profile extends React.Component {
             name: userData.name,
             email: userData.email
             });
-            console.log(this.state)
+            // console.log(this.state)
 
           }
           // if its present in local storage
           if (profilePicData!==null){
             this.setState({profilePic: profilePicData});
+            console.log(profilePicData);
+
           }
           else  // checking if its present on firebase storage then put it in local storage and state
           {
             const firebaseProfilePic = firebase.storage().ref().child("profilePics/("+this.user.uid+")ProfilePic");
             firebaseProfilePic.getDownloadURL().then((url)=> {
+              console.log(url);
               // Inserting into an State and local storage incase new device:
             this.setState({profilePic: url});
             this.storeProfilePictureToken(url);
@@ -180,7 +183,7 @@ class Profile extends React.Component {
 getFollowedUsers = () => {
    this.firestoreFollowingRef.get().then((querySnapshot)=>{
      let num = querySnapshot.size;
-     console.log(num);
+    //  console.log(num);
   this.setState({followedUsers: num});
   });
 
@@ -209,7 +212,7 @@ getRealTimeUpdates= ()=>{
       name: res.name,
       email: res.email
       });
-    console.log(res);
+    // console.log(res);
   })
 }
 
@@ -223,7 +226,7 @@ getPosts = ()=> {
         cloudImages.push(doc.data());
       });
       
- console.log(cloudImages);
+//  console.log(cloudImages);
  this.setState({posts: cloudImages.map(post => post)});
  this.setState({postCount: this.state.posts.length});
     })
@@ -396,7 +399,7 @@ getPosts = ()=> {
                             image: post.image,
                             cta: 'View article', 
                             caption: post.caption,
-                            location: post.location,
+                            location: post.location.locationName,
                             postId: post.postId,
                             userId: post.userId
                           })}

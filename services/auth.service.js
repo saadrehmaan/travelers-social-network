@@ -20,10 +20,10 @@ const getToken = async(user)=> {
 
 
 //For removing user data from AsynchStorage
-const deleteToken= async ()=> {
+const deleteToken= async (userId)=> {
   try {
      await AsyncStorage.removeItem("userData");
-     await AsyncStorage.removeItem("userProfilePic");
+     await AsyncStorage.removeItem("userProfilePic("+userId+")");
     alert("Signed Out!");
   } catch (error) {
     console.log("Something went wrong", error);
@@ -51,10 +51,11 @@ export const SigninUser = (email, password) => {
 
 
 export const logOut = ()=>{
+  let userId = auth.currentUser.uid;
     auth.signOut().then(()=>{
         getToken();
         // console.log(getToken());
-        deleteToken();
+        deleteToken(userId);
         getToken();
     })
 }

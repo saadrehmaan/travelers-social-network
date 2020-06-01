@@ -46,7 +46,8 @@ class Login extends React.Component {
         
         firestoreUserRef = firebase.firestore().collection("users").doc(res.user.uid).get()
         .then((doc)=>{
-          const userObj = doc.data();    
+          const userObj = doc.data();
+          userObj.uid = res.user.uid;   
           this.storeToken(userObj);
           this.props.navigation.navigate("SignedIn");
         }).catch((err)=>{

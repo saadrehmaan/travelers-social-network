@@ -24,6 +24,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { getPosts } from "../constants/Images";
 import {GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import {GoogleAutoComplete} from 'react-native-google-autocomplete';
+import LocationItem from "../components/LocationItem";
 
 
 
@@ -45,9 +46,11 @@ class AddPost extends React.Component {
 
   state = {
 
-    location:"",
+    location:{},
     caption:"",
     mediaFile: Images.galleryIcon ,
+    locationSelected: false,
+    posting: false
 
   };
 
@@ -66,7 +69,7 @@ class AddPost extends React.Component {
 // Pick from Gallery
 chooseFromGallery= async () =>{
     let mediaFile = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
         aspect: [4, 3],
         quality: 0.4
@@ -80,9 +83,16 @@ chooseFromGallery= async () =>{
       
 }
 
+updateLocation = (loc)=>{
+this.setState({location: loc, locationSelected: true});
+ console.log(loc);
+
+}
+
 addPost= ()=>{
     const {location, caption, mediaFile} = this.state;
     console.log(location, caption, mediaFile);
+    this.setState({posting: true});
 
 // 1. Add a post doc in the firestore first to get the post id
 // 2. Use this post id to store the mediafile in the cloud storage with this id
@@ -93,7 +103,6 @@ addPost= ()=>{
         // caption: caption,
         // image: image
       }).then((post)=>{
-
         this.uploadPost(mediaFile, post.id)
         .then(async()=>{
             const postFileRef =  firebase.storage().ref().child("postImages/"+ post.id);
@@ -107,15 +116,22 @@ addPost= ()=>{
                     caption: caption,
                     image: url,
                     time: firebase.firestore.FieldValue.serverTimestamp()
-                });
+                }).then(()=>{
+                this.setState({posting: false});
                 alert("Post Added Successfully!");
                 this.setState({
-                    location:"",
+                    location:{},
                     caption:"",
-                    mediaFile: Images.galleryIcon
-                 })
-
-                 this.props.navigation.navigate("Profile");    
+                    mediaFile: Images.galleryIcon,
+                    locationSelected: false
+                 });
+                 
+                 this.props.navigation.navigate("Profile");   
+                 console.log(this.state);
+                }).catch((err)=>{
+                    alert(err);
+                })
+ 
     
         }).catch((error)=>{
             this.firestorePostRef.doc(post.id).delete();
@@ -199,12 +215,19 @@ uploadPost = async (uri, fileName)=>{
 
                     <Block row>
                         <Block width={width * 0.8} style={{ marginBottom: 15 }}>
-                        <Input
+                        <GoogleAutoComplete apiKey={key} debounce={500} minLength={2} radius="500" queryTypes={"(regions)"}>
+                        
+                        {({ inputValue, handleTextChange, locationResults, fetchDetails , isSearching, clearSearch}) => (
+                          <React.Fragment>
+                                        {/* {console.log(locationResults)
+                                        } */}
+                                        <Input
                                           style = {styles.location}
                                           placeholder="Location"
-                                          onChangeText={location => this.setState({ location })}
-                                          // onChangeText={handleTextChange}
-                                          value={this.state.location}
+                                          // onChangeText={location => this.setState({ location })}
+                                          onChangeText={handleTextChange}
+                                          onFocus={()=>{this.setState({location: {}, locationSelected:false})}}
+                                          value={this.state.location.locationName}
                                           iconContent={
                                             <Icon
                                               size={16}
@@ -216,6 +239,26 @@ uploadPost = async (uri, fileName)=>{
                                           }
                                         />
                                         
+                            {isSearching && <ActivityIndicator size="large" />}
+
+                            {!this.state.locationSelected &&
+                            <ScrollView style={{maxHeight: 100}}>
+                              {locationResults.map((el, i) => (
+                              
+                                <LocationItem
+                                  {...el}
+                                  updateLocation={this.updateLocation}
+                                  fetchDetails={fetchDetails}
+                                  clearSearch={clearSearch}
+                                  key={String(i)}
+                                />
+                              ))}
+                            </ScrollView>
+                            }
+
+                          </React.Fragment>
+                        )}
+                      </GoogleAutoComplete>
                     </Block>
                     </Block>
                     
@@ -231,6 +274,12 @@ uploadPost = async (uri, fileName)=>{
                       Post
                     </Button>
                   </Block>
+
+                  {this.state.posting&&
+                    <Block style={{marginTop:10}}>
+                      <ActivityIndicator size="large"/>
+                      </Block>
+                  }
                  
               </Block>
       

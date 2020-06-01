@@ -45,15 +45,23 @@ export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
     signedIn: false,
+    interestsComplete: false
+
     
   }
   componentWillMount=async()=>{
     try {
+          // console.disableYellowBox= true;
           let userData = await AsyncStorage.getItem("userData");
           let data = JSON.parse(userData);
           //  console.log(data);
           if (data!=null){
             this.setState({signedIn: true})
+            if(data.interested){
+              this.setState({interestsComplete: true})
+            }else{
+              this.setState({interestsComplete: false})
+            }
           }else{
             this.setState({signedIn: false})
           }
@@ -63,7 +71,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    const Layout = AppStack(this.state.signedIn);
+    const Layout = AppStack(this.state.signedIn, this.state.interestsComplete);
     const Applayout = createAppContainer(Layout); 
     if(!this.state.isLoadingComplete) {
 
