@@ -305,13 +305,13 @@ promise.then(()=>{ // Overall iterests array is completed.
             
             // Take all the places types according to interests
             
-            overallInterests.forEach(interest => {
+            overallInterests.forEach(interest => { 
                 let comparedObj = items.find(o => o.interest === interest);
                 overallInterestsTypes.push(comparedObj.placetype);
                 
             });
         
-            
+
             overallInterestsTypes.forEach(element => {
                 console.log("Final Print", element);
                 
