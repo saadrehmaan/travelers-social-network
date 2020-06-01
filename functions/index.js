@@ -311,6 +311,7 @@ promise.then(()=>{ // Overall iterests array is completed.
                 
             });
         
+            
             overallInterestsTypes.forEach(element => {
                 console.log("Final Print", element);
                 
