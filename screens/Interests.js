@@ -79,7 +79,7 @@ class Interests extends React.Component {
         {name: "Culture", id:16, selected:false, iconName:'globe', iconFamily:'Entypo', color:'#35A7FF'},
             ]
 
-    
+     
   };
 
 onSelect = (id)=>{

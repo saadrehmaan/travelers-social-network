@@ -1,4 +1,5 @@
 import React from "react";
+//fake comment
 import {
   StyleSheet,
   ImageBackground,
@@ -34,7 +35,7 @@ class Login extends React.Component {
        await AsyncStorage.setItem("userData", JSON.stringify(user));
     } catch (error) {
       console.log("Something went wrong", error);
-    }
+    } 
   }
  
 
